@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/todo/css/base.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='/todo/css/bootstrap.css') }}">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>TodoApp</title>
+
+</head>
+<body>
+
+<!-- Display the countdown timer in an element -->
+
+<div id="rtoken" style="width: 400px;margin:0 auto;padding: 70px">
+   Access Token Expires in : <p id="demo"></p>
+<button  type="button" class="btn btn-primary" onclick="proceed();">Refresh Token</button>
+</div>
+
+
+{% include 'navbar.html' %}
+
+{% block content %}
+
+{% endblock %}
+
+
+<script src="{{ url_for('static', path='/todo/js/jquery-slim.js') }}"></script>
+<script src="{{ url_for('static', path='/todo/js/popper.js') }}"></script>
+<script src="{{ url_for('static', path='/todo/js/bootstrap.js') }}"></script>
+<script>
+// Set the date we're counting down to
+//var countDownDate = document.cookie;//new Date("Jan 5, 2024 15:37:25").getTime();
+
+var countDownDate = (document.cookie.match('(?:^|;)\\s*'+'access_token_expirationIn'+'\\s*=\\s*([^;]*?)\\s*(?:;|$)')||[])[1];
+if(countDownDate == undefined)
+{
+  $('#rtoken').hide();
+}
+countDownDate = new Date(countDownDate).getTime();
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+  + minutes + "m " + seconds + "s ";
+
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "Token Expired";
+  }
+}, 1000);
+
+function proceed () {
+        $(document).ready(function(){
+        $.post("http://127.0.0.1:8000/auth/refresh-token");
+      });
+      location.reload();
+}
+
+</script>
+
+</body>
+</html>
