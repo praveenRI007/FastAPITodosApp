@@ -16,7 +16,9 @@ from jose import jwt, JWTError, ExpiredSignatureError
 
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+import pytz
 
+IST = pytz.timezone('Asia/Kolkata')
 
 SECRET_KEY = "KlgH6AzYDeZeGwD288to79I3vTHT8wp7"
 ALGORITHM = "HS256"
@@ -82,9 +84,9 @@ def create_access_token(username: str, user_id: int,
 
     encode = {"sub": username, "id": user_id}
     if expires_delta:
-        expire = datetime.utcnow() + expires_delta
+        expire = datetime.now(IST) + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(minutes=15)
+        expire = datetime.now(IST) + timedelta(minutes=15)
     encode.update({"exp": expire})
     return jwt.encode(encode, SECRET_KEY, algorithm=ALGORITHM)
 
@@ -117,7 +119,7 @@ async def login_for_access_token(response: Response, form_data: OAuth2PasswordRe
     token = create_access_token(user.username,
                                 user.id,
                                 expires_delta=token_expires)
-    dt = datetime.now() + timedelta(minutes=1)
+    dt = datetime.now(IST) + timedelta(minutes=1)
     response.set_cookie(key="access_token", value=token)
     response.set_cookie(key="access_token_expirationIn", value=str(dt))
 
@@ -141,7 +143,7 @@ async def login_for_refresh_access_token(request: Request, response: Response):
     token = create_access_token(username,
                                 user_id,
                                 expires_delta=token_expires)
-    dt = datetime.now() + timedelta(minutes=1)
+    dt = datetime.now(IST) + timedelta(minutes=1)
     response.set_cookie(key="access_token", value=token)
     response.set_cookie(key="access_token_expirationIn", value=str(dt))
 
