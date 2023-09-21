@@ -143,7 +143,7 @@ async def login_for_refresh_access_token(request: Request, response: Response):
                                 expires_delta=token_expires)
     dt = datetime.now() + timedelta(minutes=1)
     response.set_cookie(key="access_token", value=token, httponly=True)
-    response.set_cookie(key="access_token_expirationIn", value=str(dt))
+    response.set_cookie(key="access_token_expirationIn", value=str(dt),httponly=True)
 
     return True
 
