@@ -18,7 +18,8 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 import pytz
 
-IST = pytz.timezone('Asia/Kolkata')
+#IST = pytz.timezone('Asia/Kolkata')
+IST = None
 
 SECRET_KEY = "KlgH6AzYDeZeGwD288to79I3vTHT8wp7"
 ALGORITHM = "HS256"
@@ -157,6 +158,7 @@ async def authentication_page(request: Request):
 
 @router.post("/", response_class=HTMLResponse)
 async def login(request: Request, db: Session = Depends(get_db)):
+    global IST
     try:
         form = LoginForm(request)
         await form.create_oauth_form()
@@ -167,6 +169,7 @@ async def login(request: Request, db: Session = Depends(get_db)):
         if not validate_user_cookie:
             msg = "Incorrect Username or Password"
             return templates.TemplateResponse("login.html", {"request": request, "msg": msg})
+        IST = pytz.timezone(request.cookies.get("ClientTimeZone"))
         return response
     except HTTPException:
         msg = "Unknown Error"

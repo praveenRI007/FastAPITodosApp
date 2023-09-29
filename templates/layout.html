@@ -34,6 +34,9 @@
 // Set the date we're counting down to
 //var countDownDate = document.cookie;//new Date("Jan 5, 2024 15:37:25").getTime();
 
+var ClientTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+document.cookie = "ClientTimeZone" + "=" + ClientTimeZone
+
 var countDownDate = (document.cookie.match('(?:^|;)\\s*'+'access_token_expirationIn'+'\\s*=\\s*([^;]*?)\\s*(?:;|$)')||[])[1];
 if(countDownDate == undefined)
 {
