@@ -2,14 +2,15 @@
 # Fast API : To Do App
 
 
-
 This project is developed as part of learning from Fast API udemy course from Eric Roby.
+I have deployed this app for free in render.com (Fast API) and elephantsql.com (PostgreSQL DB)
+to use this app in action go to :  [ToDosApp](https://todosapp-w0aj.onrender.com) Let me know your todos ;)
 
 - This API has User login / Registration page / logout , where user's password are stored as Hashes in Database
 - JWT authentication is used , token stored in cookies.
 - CRUD operations for To Do List
 - PostgreSQL for Database
-- to use this app in action go to :  [ToDosApp](https://todosapp-w0aj.onrender.com)
+- Time zone information is fetched from javascript and sent as cookie to backend server where token , refresh token are set based on that so works for users across different Timezones
 
 ## Tech Stack
 
@@ -28,7 +29,6 @@ To deploy this project run
   uvicorn main:app --reload --port 5000
 ```
 
-- I have deployed this app for free in render.com (Fast API) and elephantsql.com (PostgreSQL DB)
 
 
 ## API Reference
