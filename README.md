@@ -3,9 +3,9 @@
 
 This project is developed as part of learning from Fast API udemy course from Eric Roby.
 
-Markup : *This API has User login / Registration page , where user's password are stored as Hashes in Database
-         *JWT authentication is used.
-         *CRUD operations for To Do List
+-This API has User login / Registration page , where user's password are stored as Hashes in Database
+-JWT authentication is used.
+-CRUD operations for To Do List
 
 
 ## Tech Stack
