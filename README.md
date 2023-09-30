@@ -9,6 +9,7 @@ This project is developed as part of learning from Fast API udemy course from Er
 - JWT authentication is used , token stored in cookies.
 - CRUD operations for To Do List
 - PostgreSQL for Database
+- to use this app in action go to :  [ToDosApp](https://todosapp-w0aj.onrender.com)
 
 ## Tech Stack
 
@@ -26,6 +27,8 @@ To deploy this project run
 ```bash
   uvicorn main:app --reload --port 5000
 ```
+
+- I have deployed this app for free in render.com (Fast API) and elephantsql.com (PostgreSQL DB)
 
 
 ## API Reference
