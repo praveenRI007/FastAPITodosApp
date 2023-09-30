@@ -1,7 +1,11 @@
 
 # Fast API : To Do App
 
-This project is developed as part of learning from Fast API udemy course from Eric Roby
+This project is developed as part of learning from Fast API udemy course from Eric Roby.
+
+This API has User login / Registration page , where user's password are stored as Hashes in Database
+JWT authentication is used.
+CRUD operations for To Do List
 
 
 ## Tech Stack
@@ -119,8 +123,9 @@ To deploy this project run
 
 ## Demo
 
-Insert gif or link to demo
-
+<p align="center">
+  <img src="FastAPI.gif.gif" alt="animated" />
+</p>
 
 ## Acknowledgements
 
