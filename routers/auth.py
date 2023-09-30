@@ -181,6 +181,7 @@ async def logout(request: Request):
     msg = "Logout Successful"
     response = templates.TemplateResponse("login.html", {"request": request, "msg": msg})
     response.delete_cookie(key="access_token")
+    response.delete_cookie(key="access_token_expirationIn")
     return response
 
 
