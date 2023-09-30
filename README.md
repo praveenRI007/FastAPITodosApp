@@ -1,13 +1,14 @@
 
 # Fast API : To Do App
 
+
+
 This project is developed as part of learning from Fast API udemy course from Eric Roby.
 
 - This API has User login / Registration page / logout , where user's password are stored as Hashes in Database
 - JWT authentication is used , token stored in cookies.
 - CRUD operations for To Do List
 - PostgreSQL for Database
-
 
 ## Tech Stack
 
