@@ -4,7 +4,7 @@ sys.path.append("..")
 from starlette.responses import RedirectResponse
 
 from fastapi import Depends, HTTPException, status, APIRouter, Request, Response, Form
-from pydantic import BaseModel
+from pydantic import BaseModel , root_validator , ValidationError
 from typing import Optional
 import models
 from passlib.context import CryptContext
@@ -50,6 +50,25 @@ class LoginForm:
         form = await self.request.form()
         self.username = form.get("email")
         self.password = form.get("password")
+
+
+class RegisterForm(BaseModel):
+    email: str
+    username: str
+    firstname: str
+    lastname: str
+    password: str
+    password2: str
+
+    @root_validator()
+    def verify_password_match(cls, values):
+        password = values.get("password")
+        password2 = values.get("password2")
+
+        if password != password2:
+            raise ValueError("The two passwords did not match.")
+        return values
+
 
 
 def get_db():
@@ -195,6 +214,11 @@ async def register_user(request: Request, email: str = Form(...), username: str 
                         firstname: str = Form(...), lastname: str = Form(...),
                         password: str = Form(...), password2: str = Form(...),
                         db: Session = Depends(get_db)):
+    try:
+        RegisterForm(email=email,username=username,firstname=firstname,lastname=lastname,password=password,password2=password2)
+    except ValidationError:
+        msg = "password mismatch"
+        return templates.TemplateResponse("register.html", {"request": request, "msg": msg})
 
     validation1 = db.query(models.Users).filter(models.Users.username == username).first()
 
