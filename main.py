@@ -1,6 +1,8 @@
 from fastapi import FastAPI, Depends
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import RedirectResponse
+from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
+
 
 import models
 from database import engine, check_db_connected, check_db_disconnected
@@ -13,6 +15,9 @@ origins = [
     "http://localhost",
     "http://localhost:8080",
 ]
+
+
+#app.add_middleware(HTTPSRedirectMiddleware)
 
 app.add_middleware(
     CORSMiddleware,
