@@ -11,6 +11,7 @@ to use this app in action go to :  [ToDosApp](https://todosapp-w0aj.onrender.com
 - CRUD operations for To Do List
 - PostgreSQL for Database
 - Time zone information is fetched from javascript and sent as cookie to backend server where token , refresh token are set based on that so works for users across different Timezones
+- command for starting the app : gunicorn -w 2 -k uvicorn.workers.UvicornWorker main:app
 
 ## Tech Stack
 
