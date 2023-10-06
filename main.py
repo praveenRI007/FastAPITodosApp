@@ -36,6 +36,11 @@ app.include_router(todos.router)
 app.include_router(users.router)
 
 
+@app.get("/testdata")
+async def read_main():
+    return {"msg": "Hello World"}
+
+
 @app.on_event("startup")
 async def app_startup():
     await check_db_connected()
