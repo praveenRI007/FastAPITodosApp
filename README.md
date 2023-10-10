@@ -12,6 +12,10 @@ to use this app in action go to :  [ToDosApp](https://todosapp-w0aj.onrender.com
 - PostgreSQL for Database
 - Time zone information is fetched from javascript and sent as cookie to backend server where token , refresh token are set based on that so works for users across different Timezones
 - command for starting the app : gunicorn -w 2 -k uvicorn.workers.UvicornWorker main:app
+- to deploy app in docker here are the following commands
+  - docker login {server} -u {username} -p {password}
+  - docker build -t {server}/{appname}:build-tag-{}
+  - docker push {server}/{appname}:build-tag-{}
 
 ## Tech Stack
 
