@@ -1,7 +1,8 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends , Request
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import RedirectResponse
 from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
+import time
 
 
 import models
@@ -50,6 +51,16 @@ async def app_startup():
 async def app_shutdown():
     await check_db_disconnected()
 
+
 @app.get("/")
 async def root():
     return RedirectResponse(url="/auth/register")
+
+
+@app.middleware("http")
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = time.time() - start_time
+    response.headers["X-Process-Time"] = str(process_time)
+    return response
