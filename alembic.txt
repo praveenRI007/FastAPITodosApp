@@ -1,0 +1,19 @@
+pip install alembic
+
+alembic init <folder name> - initializes a new generic environment
+
+  - alembic ini automatically created , contains configuration for alembic
+  - replace sql uri
+  - init target metadata = models.base.metadata
+
+alembic revision -m <message> - creates a new revision of environment
+
+   - after adding revision , in the version revision file is created with upgrade() and downgrade() methods
+   - after adding our table changes , run alembic upgrade command
+
+alembic upgrade <revision #> - run our upgrade migration to our database
+
+alembic downgrade -1 - run our downgrade migration to our database
+
+
+

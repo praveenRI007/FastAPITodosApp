@@ -1,0 +1,9 @@
+URI Versioning
+    GET /api/users?version=1
+    GET /api/users?version=2
+
+Header Versioning
+
+    GET /api/users
+    Headers: { "X-API-Version": "1" }
+
