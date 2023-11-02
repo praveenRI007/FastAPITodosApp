@@ -7,3 +7,5 @@ Header Versioning
     GET /api/users
     Headers: { "X-API-Version": "1" }
 
+Query Params
+    http://www.example.com/api/products?version=1
