@@ -140,6 +140,7 @@ async def login_for_access_token(response: Response, form_data: OAuth2PasswordRe
                                 user.id,
                                 expires_delta=token_expires)
     dt = datetime.now(IST) + timedelta(minutes=1)
+    response.headers["Authorization"] = "Bearer "+ token
     response.set_cookie(key="access_token", value=token)
     response.set_cookie(key="access_token_expirationIn", value=str(dt))
 
@@ -164,6 +165,7 @@ async def login_for_refresh_access_token(request: Request, response: Response):
                                 user_id,
                                 expires_delta=token_expires)
     dt = datetime.now(IST) + timedelta(minutes=1)
+    response.headers["Authorization"] = "Bearer " + token
     response.set_cookie(key="access_token", value=token)
     response.set_cookie(key="access_token_expirationIn", value=str(dt))
 
