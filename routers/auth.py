@@ -154,7 +154,8 @@ async def login_for_refresh_access_token(request: Request, response: Response):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
     except ExpiredSignatureError:
-        return {"msg": "access token expired , cannot request for refresh token"}
+        response = templates.TemplateResponse("login.html", {"request": request, "msg": "access token expired , cannot request for refresh token"})
+        return response
 
     username: str = payload.get("sub")
     user_id: int = payload.get("id")
