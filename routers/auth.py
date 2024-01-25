@@ -18,8 +18,8 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 import pytz
 
-#IST = pytz.timezone('Asia/Kolkata')
-IST = None
+IST = pytz.timezone('Asia/Kolkata')
+#IST = None
 
 SECRET_KEY = "KlgH6AzYDeZeGwD288to79I3vTHT8wp7"
 ALGORITHM = "HS256"
@@ -146,7 +146,7 @@ async def login_for_access_token(response: Response, form_data: OAuth2PasswordRe
 
     return True
 
-@router.post("/refresh-token")
+@router.post("/refresh-token/")
 async def login_for_refresh_access_token(request: Request, response: Response):
     token = request.cookies.get("access_token")
     if token is None:
