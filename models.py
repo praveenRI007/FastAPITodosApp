@@ -1,6 +1,7 @@
 from sqlalchemy import Boolean, Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from database import Base
+from pydantic import BaseModel
 
 
 class Users(Base):
@@ -28,3 +29,12 @@ class Todos(Base):
     owner_id = Column(Integer, ForeignKey("users.id"))
 
     owner = relationship("Users", back_populates="todos")
+
+
+class MtoDos(BaseModel):
+    title: str
+    description: str
+    priority: int
+    complete: bool
+    owner_id: int
+
