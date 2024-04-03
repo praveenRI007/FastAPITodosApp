@@ -28,5 +28,5 @@ watchfiles==0.18.1
 websockets==10.4
 jinja2==3.1.2
 pytz==2023.3
-
+pymongo==4.6.3
 redis~=3.2.1
