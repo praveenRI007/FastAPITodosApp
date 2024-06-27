@@ -47,15 +47,16 @@ def get_db():
 @router.get("/", response_class=HTMLResponse)
 async def read_all_by_user(request: Request, db: Session = Depends(get_db)):
 
-    r = redis.Redis(host='redis-10708.c264.ap-south-1-1.ec2.cloud.redislabs.com',port=10708,password='IxJp9N3b3IiIoVusSXcLYirS0bNOCyjC')
-
+    # r = redis.Redis(host='redis-10708.c264.ap-south-1-1.ec2.cloud.redislabs.com',port=10708,password='IxJp9N3b3IiIoVusSXcLYirS0bNOCyjC')
+    r = {}
     user = await get_current_user(request)
     if user is None:
         return RedirectResponse(url="/auth", status_code=status.HTTP_302_FOUND)
 
-    cache = r.get(str(models.Todos.owner_id) + "-todos")
+    # cache = r.get(str(models.Todos.owner_id) + "-todos")
+    cache = False
     if cache:
-        #r.delete(str(models.Todos.owner_id) + "-todos")
+        # r.delete(str(models.Todos.owner_id) + "-todos")
         print('cache hit')
         todos = pickle.loads(cache)
     else:
@@ -66,7 +67,7 @@ async def read_all_by_user(request: Request, db: Session = Depends(get_db)):
             # mongo
             todos = list_serial(collection_name.find())
 
-        r.set(str(models.Todos.owner_id) + "-todos",pickle.dumps(todos),ex=timedelta(minutes=1))
+        # r.set(str(models.Todos.owner_id) + "-todos",pickle.dumps(todos),ex=timedelta(minutes=1))
 
     return templates.TemplateResponse("home.html", {"request": request, "todos": todos, "user": user})
 
