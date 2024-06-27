@@ -1,16 +1,19 @@
 import uvicorn
-from fastapi import FastAPI, Depends , Request
+from fastapi import FastAPI, Depends, Request, Response
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import RedirectResponse
 from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
 import time
-from middlewares import MyMiddleware
-
+from middlewares import MyMiddleware, AdvancedMiddleware
+import random
+import string
+from collections import defaultdict
+from typing import Dict
 
 import models
 from database import engine, check_db_connected, check_db_disconnected
-from routers import auth, todos , users
+from routers import auth, todos, users
 from starlette.staticfiles import StaticFiles
 
 from settings import Settings
@@ -18,7 +21,10 @@ from jose import jwt, JWTError, ExpiredSignatureError
 
 app = FastAPI()
 
+app.mount('/static', StaticFiles(directory='static', html=True), name='static')
+
 app.add_middleware(MyMiddleware, some_attribute="some_attribute_here_if_needed")
+# app.add_middleware(AdvancedMiddleware)
 
 settings = Settings()
 
@@ -27,8 +33,8 @@ origins = [
     "http://localhost:8080",
 ]
 
+# app.add_middleware(HTTPSRedirectMiddleware)
 
-#app.add_middleware(HTTPSRedirectMiddleware)
 
 app.add_middleware(
     CORSMiddleware,
@@ -39,6 +45,7 @@ app.add_middleware(
 )
 
 
+# middleware for appending request response time in request
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next):
     start_time = time.time()
@@ -46,6 +53,7 @@ async def add_process_time_header(request: Request, call_next):
     process_time = time.time() - start_time
     response.headers["X-Process-Time"] = str(process_time)
     return response
+
 
 models.Base.metadata.create_all(bind=engine)
 
