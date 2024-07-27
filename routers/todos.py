@@ -18,7 +18,7 @@ from fastapi.templating import Jinja2Templates
 import redis
 
 from models import MtoDos
-from database import collection_name
+# from database import collection_name
 from schemas.schema import list_serial, individual_serial
 from bson import ObjectId
 from settings import Settings
